@@ -14,7 +14,7 @@ mod_settings = {
     value_display_multiplier = 100,
     value_display_formatting = " $0 %",
     scope = MOD_SETTING_SCOPE_RUNTIME,
-  },	  
+  },
   {
     id = "max_health_increase",
     ui_name = "Max Health Increase",
@@ -31,7 +31,7 @@ mod_settings = {
     ui_name = "Health Container Healing Mode",
     ui_description = "Set whether health containers heal a fixed amount or a percent of max health.",
     value_default = "fixed",
-    values = { {"percent", "Percent"}, {"fixed", "Fixed"} },
+    values = { { "percent", "Percent" }, { "fixed", "Fixed" } },
     scope = MOD_SETTING_SCOPE_RUNTIME,
   },
   {
@@ -64,9 +64,9 @@ mod_settings = {
 -- 		- before mod initialization when starting a new game (init_scope will be MOD_SETTING_SCOPE_NEW_GAME)
 --		- when entering the game after a restart (init_scope will be MOD_SETTING_SCOPE_RESTART)
 --		- at the end of an update when mod settings have been changed via ModSettingsSetNextValue() and the game is unpaused (init_scope will be MOD_SETTINGS_SCOPE_RUNTIME)
-function ModSettingsUpdate( init_scope )
-	local old_version = mod_settings_get_version( mod_id ) -- This can be used to migrate some settings between mod versions.
-	mod_settings_update( mod_id, mod_settings, init_scope )
+function ModSettingsUpdate(init_scope)
+  local old_version = mod_settings_get_version(mod_id) -- This can be used to migrate some settings between mod versions.
+  mod_settings_update(mod_id, mod_settings, init_scope)
 end
 
 -- This function should return the number of visible setting UI elements.
@@ -76,13 +76,13 @@ end
 -- At the moment it is fine to simply return 0 or 1 in a custom implementation, but we don't guarantee that will be the case in the future.
 -- This function is called every frame when in the settings menu.
 function ModSettingsGuiCount()
-	-- if (not DebugGetIsDevBuild()) then --if these lines are enabled, the menu only works in noita_dev.exe.
-	-- 	return 0
-	-- end
+  -- if (not DebugGetIsDevBuild()) then --if these lines are enabled, the menu only works in noita_dev.exe.
+  -- 	return 0
+  -- end
 
-	return mod_settings_gui_count( mod_id, mod_settings )
+  return mod_settings_gui_count(mod_id, mod_settings)
 end
 
-function ModSettingsGui( gui, in_main_menu )
-  mod_settings_gui( mod_id, mod_settings, gui, in_main_menu )
+function ModSettingsGui(gui, in_main_menu)
+  mod_settings_gui(mod_id, mod_settings, gui, in_main_menu)
 end
