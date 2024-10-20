@@ -7,7 +7,7 @@ function do_health_drop()
 
 	if (GameGetIsTrailerModeEnabled()) then return end
 
-	if (math.random() < ModSettingGet("health_container.drop_chance")) then
+	if (math.random() < ModSettingGet("health_container.drop_chance_constant")) then
 		EntityLoad("mods/health_container/files/data/entities/items/pickup/health_container.xml", x, y - 7)
 	end
 end

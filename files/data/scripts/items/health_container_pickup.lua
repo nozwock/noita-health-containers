@@ -1,5 +1,6 @@
 dofile_once("data/scripts/game_helpers.lua")
 dofile_once("data/scripts/lib/utilities.lua")
+local const = dofile_once("mods/health_container/files/data/scripts/const.lua") ---@type const
 
 function item_pickup(entity_item, entity_who_picked, item_name)
 	local function TruncateHpValue(value)
@@ -21,19 +22,19 @@ function item_pickup(entity_item, entity_who_picked, item_name)
 
 			local current_max_hp = tonumber(ComponentGetValue(v, "max_hp"))
 			local heal_amt = 0
-			local mode = ModSettingGet("health_container.heal_mode")
+			local mode = ModSettingGet("health_container.hp_gain_mode")
 
-			if (tostring(mode) == "percent") then
-				heal_amt = current_max_hp * (ModSettingGet("health_container.heal_percent"))
+			if (mode == const.enum.HP_GAIN_MODE.PLAYER_HP_FRACTION) then
+				heal_amt = current_max_hp * (ModSettingGet("health_container.hp_gain_fraction_player"))
 			else
-				heal_amt = ModSettingGet("health_container.heal_amount") -- Health values are scaled up by 25 in the UI apparently.
+				heal_amt = ModSettingGet("health_container.hp_gain_constant") -- Health values are scaled up by 25 in the UI apparently.
 			end
 
 			heal_amt = math.max(heal_amt, 0.04) -- set heal_amt to be at least 1 HP
 			local target_hp = TruncateHpValue(current_hp + heal_amt)
 
 			-- handle expansion of max HP:
-			local max_incr_amt = ModSettingGet("health_container.max_health_increase")
+			local max_incr_amt = ModSettingGet("health_container.max_hp_gain")
 
 			if (max_incr_amt > 0) then
 				max_incr_amt = math.max(0.04, max_incr_amt) -- set increase amt to at least 1 HP
