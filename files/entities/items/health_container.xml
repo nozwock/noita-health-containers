@@ -20,7 +20,7 @@
 	<PhysicsImageShapeComponent
 		body_id="1"
 		centered="1"
-		image_file="mods/health_container/files/health_container.png"
+		image_file="mods/health_container/files/gfx/items/health_container.png"
 		material="ice_glass_b2"
 	/>
 
