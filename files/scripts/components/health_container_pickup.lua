@@ -18,9 +18,9 @@ function item_pickup(entity_item, entity_who_picked, item_name)
 
   if damagemodels ~= nil then
     for i, v in ipairs(damagemodels) do
-      local current_hp = tonumber(ComponentGetValue(v, "hp"))
+      local current_hp = ComponentGetValue2(v, "hp")
 
-      local current_max_hp = tonumber(ComponentGetValue(v, "max_hp"))
+      local current_max_hp = ComponentGetValue2(v, "max_hp")
       local heal_amt = 0
       local mode = ModSettingGet("health_container.hp_gain_mode")
 
@@ -43,11 +43,11 @@ function item_pickup(entity_item, entity_who_picked, item_name)
       local target_max_hp = TruncateHpValue(current_max_hp + max_incr_amt)
 
       -- Save values
-      ComponentSetValue(v, "max_hp", target_max_hp)
+      ComponentSetValue2(v, "max_hp", target_max_hp)
 
       if target_hp > target_max_hp then target_hp = target_max_hp end
-      ComponentSetValue(v, "hp", target_hp)
-      GamePrint("Picked up Health (" .. (TruncateHpValue(heal_amt) * 25) .. ")")
+      ComponentSetValue2(v, "hp", target_hp)
+      GamePrint(string.format("Picked up Health (%d)", TruncateHpValue(heal_amt) * 25))
       break
     end
   end
