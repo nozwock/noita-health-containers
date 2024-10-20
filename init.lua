@@ -1,1 +1,1 @@
-ModRegisterAudioEventMappings("mods/health_container/files/audio_events.txt")
+ModRegisterAudioEventMappings("mods/health_container/files/audio/audio_events.txt")

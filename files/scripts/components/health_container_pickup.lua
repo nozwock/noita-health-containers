@@ -52,7 +52,12 @@ function item_pickup(entity_item, entity_who_picked, item_name)
     end
   end
 
-  GamePlaySound("mods/health_container/files/health_container_audio.snd", "health_container/hc_heal", pos_x, pos_y)
+  GamePlaySound(
+    "mods/health_container/files/audio/health_container_audio.snd",
+    "health_container/hc_heal",
+    pos_x,
+    pos_y
+  )
   shoot_projectile(
     entity_item,
     "mods/health_container/files/entities/particles/health_container_pickup.xml",
