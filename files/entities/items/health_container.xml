@@ -48,7 +48,7 @@
 	<LifetimeComponent lifetime="900" />
 
 	<LuaComponent
-		script_item_picked_up="mods/health_container/files/scripts/items/health_container_pickup.lua"
+		script_item_picked_up="mods/health_container/files/scripts/components/health_container_pickup.lua"
 	/>
 
 	<!-- particle glitter -->

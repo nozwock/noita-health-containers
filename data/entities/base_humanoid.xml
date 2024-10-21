@@ -9,7 +9,7 @@
 
 	<LuaComponent
 		execute_every_n_frame="-1"
-		script_death="mods/health_container/files/scripts/items/drop_health_container.lua"
+		script_death="mods/health_container/files/scripts/components/drop_health_container.lua"
 		remove_after_executed="1"
 	/>
 
