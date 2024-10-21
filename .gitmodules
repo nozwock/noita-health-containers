@@ -1,0 +1,3 @@
+[submodule "files/scripts/lib/nxml"]
+	path = files/scripts/lib/nxml
+	url = https://github.com/NathanSnail/luanxml
