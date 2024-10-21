@@ -21,8 +21,6 @@ function death(damage_type_bit_field, damage_message, entity_thats_responsible, 
     drop_chance = max_hp / base_hp * base_chance
   end
 
-  print("drop_mode", drop_chance_mode, "max_hp", max_hp, "drop_chance", drop_chance)
-
   if GameGetIsTrailerModeEnabled() or math.random() > drop_chance then return end
 
   local x, y = EntityGetTransform(entity_id)
