@@ -4,42 +4,44 @@ local const = dofile_once("mods/health_container/files/scripts/const.lua") ---@t
 local utils = dofile_once("mods/health_container/files/scripts/utils.lua") ---@type utils
 
 function item_pickup(entity_item, entity_who_picked, item_name)
-  local enemy_max_hp
-  local hp_gain_mode = const.enum.HP_GAIN_MODE.CONSTANT
-  local comp = EntityGetFirstComponent(entity_item, "VariableStorageComponent", "hp_gain_mode")
-  if comp then
-    hp_gain_mode = ComponentGetValue2(comp, "value_int")
-    comp = EntityGetFirstComponent(entity_item, "VariableStorageComponent", "enemy_max_hp")
-    if comp then enemy_max_hp = ComponentGetValue2(comp, "value_float") end
-  end
-
   local damage_model = EntityGetFirstComponent(entity_who_picked, "DamageModelComponent")
   if not damage_model then return end
 
   local player_hp = ComponentGetValue2(damage_model, "hp")
   local player_max_hp = ComponentGetValue2(damage_model, "max_hp")
 
-  local hp_gain = 0
-  local hp_gain_player_scale = ModSettingGet(utils:ResolveModSettingId("hp_gain_player_scale")) --[[@as number]]
-  local function get_scaled_hp_gain(hp_gain)
+  local hp_gain_player_scale = utils:ModSettingGetNumber("hp_gain_player_scale")
+
+  ---Scale `hp_gain` with player's maximum HP.
+  ---@param hp_gain number
+  ---@return number
+  local function scale_hp_gain(hp_gain)
     return hp_gain * (player_max_hp - const.BASE_PLAYER_HP) / const.BASE_PLAYER_HP * hp_gain_player_scale
   end
+
+  local hp_gain_mode = utils:ModSettingGetNumber("hp_gain_mode")
+
+  local vsc = utils:EntityGetFirstVSC(entity_item, "enemy_max_hp")
+  if not vsc then return end
+  local enemy_max_hp = ComponentGetValue2(vsc, "value_float")
+
+  local hp_gain = 0
   if hp_gain_mode == const.enum.HP_GAIN_MODE.CONSTANT then
-    hp_gain = utils:ModSettingGet("hp_gain_constant") --[[@as number]]
-    hp_gain = hp_gain + get_scaled_hp_gain(hp_gain)
+    hp_gain = utils:ModSettingGetNumber("hp_gain_constant")
+    hp_gain = hp_gain + scale_hp_gain(hp_gain)
   elseif hp_gain_mode == const.enum.HP_GAIN_MODE.PLAYER_HP_FRACTION then
-    hp_gain = player_max_hp * utils:ModSettingGet("hp_gain_fraction_player")
+    hp_gain = player_max_hp * utils:ModSettingGetNumber("hp_gain_fraction_player")
   elseif hp_gain_mode == const.enum.HP_GAIN_MODE.ENEMY_HP_FRACTION then
     hp_gain = utils:ModSettingGet("hp_gain_fraction_enemy_constant")
-      + enemy_max_hp * utils:ModSettingGet("hp_gain_fraction_enemy")
-    hp_gain = hp_gain + get_scaled_hp_gain(hp_gain)
+      + enemy_max_hp * utils:ModSettingGetNumber("hp_gain_fraction_enemy")
+    hp_gain = hp_gain + scale_hp_gain(hp_gain)
   end
 
-  local max_hp_gain = ModSettingGet(utils:ResolveModSettingId("max_hp_gain")) --[[@as number]]
+  local max_hp_gain = utils:ModSettingGetNumber("max_hp_gain")
 
-  local hp_gain_variation = ModSettingGet(utils:ResolveModSettingId("hp_gain_variation_percentage")) --[[@as number]]
+  local hp_gain_variation = utils:ModSettingGetNumber("hp_gain_variation_percentage")
   if hp_gain_variation < 1 then -- 100% means no variation
-    hp_gain_variation = utils:TruncateNumber(utils:RandomFloat(hp_gain_variation, 1), 2)
+    hp_gain_variation = utils:RandomFloat(hp_gain_variation, 1)
     hp_gain = hp_gain * hp_gain_variation
     max_hp_gain = max_hp_gain * hp_gain_variation
   end
