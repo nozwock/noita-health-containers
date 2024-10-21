@@ -10,16 +10,16 @@ function item_pickup(entity_item, entity_who_picked, item_name)
   local player_hp = ComponentGetValue2(damage_model, "hp")
   local player_max_hp = ComponentGetValue2(damage_model, "max_hp")
 
-  local hp_gain_player_scale = utils:ModSettingGetNumber("hp_gain_player_scale")
+  local player_hp_gain_scale = utils:ModSettingGetNumber("hp_gain.player_max_hp_scale")
 
   ---Scale `hp_gain` with player's maximum HP.
   ---@param hp_gain number
   ---@return number
   local function scale_hp_gain(hp_gain)
-    return hp_gain * (player_max_hp - const.BASE_PLAYER_HP) / const.BASE_PLAYER_HP * hp_gain_player_scale
+    return hp_gain * (player_max_hp - const.BASE_PLAYER_HP) / const.BASE_PLAYER_HP * player_hp_gain_scale
   end
 
-  local hp_gain_mode = utils:ModSettingGetNumber("hp_gain_mode")
+  local hp_gain_mode = utils:ModSettingGetNumber("hp_gain.mode")
 
   local vsc = utils:EntityGetFirstVSC(entity_item, "enemy_max_hp")
   if not vsc then return end
@@ -27,13 +27,13 @@ function item_pickup(entity_item, entity_who_picked, item_name)
 
   local hp_gain = 0
   if hp_gain_mode == const.enum.HP_GAIN_MODE.CONSTANT then
-    hp_gain = utils:ModSettingGetNumber("hp_gain_constant")
+    hp_gain = utils:ModSettingGetNumber("hp_gain.constant_hp")
     hp_gain = hp_gain + scale_hp_gain(hp_gain)
   elseif hp_gain_mode == const.enum.HP_GAIN_MODE.PLAYER_HP_FRACTION then
-    hp_gain = player_max_hp * utils:ModSettingGetNumber("hp_gain_fraction_player")
+    hp_gain = player_max_hp * utils:ModSettingGetNumber("hp_gain.player_hp_fraction")
   elseif hp_gain_mode == const.enum.HP_GAIN_MODE.ENEMY_HP_FRACTION then
-    hp_gain = utils:ModSettingGet("hp_gain_fraction_enemy_constant")
-      + enemy_max_hp * utils:ModSettingGetNumber("hp_gain_fraction_enemy")
+    hp_gain = utils:ModSettingGet("hp_gain.enemy_base_hp")
+      + enemy_max_hp * utils:ModSettingGetNumber("hp_gain.enemy_hp_fraction")
     hp_gain = hp_gain + scale_hp_gain(hp_gain)
   end
 

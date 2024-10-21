@@ -208,7 +208,7 @@ mod_settings = {
     _folded = false,
     settings = {
       {
-        id = "drop_chance_mode",
+        id = "drop_chance.mode",
         ui_name = "Mode",
         value_default = DROP_CHANCE_MODE.CONSTANT,
         ui_fn = CreateGuiSettingEnum({ DROP_CHANCE_MODE.CONSTANT, DROP_CHANCE_MODE.ENEMY_SCALE }, {
@@ -224,7 +224,7 @@ mod_settings = {
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "drop_chance_constant",
+        id = "drop_chance.constant_chance",
         ui_name = "Chance",
         value_default = 0.05,
         value_min = 0.01,
@@ -233,14 +233,14 @@ mod_settings = {
         value_display_multiplier = 100,
         value_display_formatting = " %d%%",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("drop_chance_mode")) == DROP_CHANCE_MODE.CONSTANT then
+          if ModSettingGetNextValue(ResolveModSettingId("drop_chance.mode")) == DROP_CHANCE_MODE.CONSTANT then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "drop_chance_scale_base",
+        id = "drop_chance.enemy_base_chance",
         ui_name = "Base Chance",
         ui_description = "The drop chance for an enemy with HP equal to 'Base Enemy HP'.",
         value_default = 0.02,
@@ -250,14 +250,14 @@ mod_settings = {
         value_display_multiplier = 100,
         value_display_formatting = " %d%%",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("drop_chance_mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
+          if ModSettingGetNextValue(ResolveModSettingId("drop_chance.mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "drop_chance_scale_base_hp",
+        id = "drop_chance.enemy_base_hp",
         ui_name = "Base Enemy HP",
         ui_description = "The drop chance will vary based on how much the enemy's HP\ndiffers from this base value.\nDefault value of 25 is equal to about 10 Hämis or 1 Acid Slime.",
         value_default = 1,
@@ -267,7 +267,7 @@ mod_settings = {
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("drop_chance_mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
+          if ModSettingGetNextValue(ResolveModSettingId("drop_chance.mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
             mod_setting_float(...)
           end
         end,
@@ -283,7 +283,7 @@ mod_settings = {
     _folded = false,
     settings = {
       {
-        id = "hp_gain_mode",
+        id = "hp_gain.mode",
         ui_name = "Mode",
         value_default = HP_GAIN_MODE.CONSTANT,
         ui_fn = CreateGuiSettingEnum(
@@ -306,7 +306,7 @@ mod_settings = {
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "hp_gain_constant",
+        id = "hp_gain.constant_hp",
         ui_name = "Amount",
         value_default = 0.2,
         value_min = 0.04,
@@ -315,14 +315,14 @@ mod_settings = {
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("hp_gain_mode")) == HP_GAIN_MODE.CONSTANT then
+          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.CONSTANT then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "hp_gain_fraction_player",
+        id = "hp_gain.player_hp_fraction",
         ui_name = "HP Fraction",
         value_default = 0.05,
         value_min = 0.01,
@@ -331,14 +331,14 @@ mod_settings = {
         value_display_multiplier = 100,
         value_display_formatting = " %d%%",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("hp_gain_mode")) == HP_GAIN_MODE.PLAYER_HP_FRACTION then
+          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.PLAYER_HP_FRACTION then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "hp_gain_fraction_enemy_constant",
+        id = "hp_gain.enemy_base_hp",
         ui_name = "Base Amount",
         ui_description = "The amount of additional HP to be healed, along\nwith a percentage of the enemy's max HP.",
         value_default = 0.4,
@@ -348,14 +348,14 @@ mod_settings = {
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("hp_gain_mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
+          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
-        id = "hp_gain_fraction_enemy",
+        id = "hp_gain.enemy_hp_fraction",
         ui_name = "HP Fraction",
         ui_description = "The percentage of enemy's max HP to be healed.",
         value_default = 0.4,
@@ -365,14 +365,14 @@ mod_settings = {
         value_display_multiplier = 100,
         value_display_formatting = " %d%%",
         ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("hp_gain_mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
+          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
             mod_setting_float(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       { -- HP_GAIN + HP_GAIN * ((MAX_HP - BASE_HP) / BASE_HP) * SCALE
-        id = "hp_gain_player_scale",
+        id = "hp_gain.player_max_hp_scale",
         ui_name = "Player HP Scale",
         ui_description = "The extent to which the healing amount\nscales with the player's maximum HP.",
         value_default = 0.4,
@@ -384,7 +384,7 @@ mod_settings = {
           if
             Any(
               function(a, b) return a == b end,
-              ModSettingGetNextValue(ResolveModSettingId("hp_gain_mode")),
+              ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")),
               HP_GAIN_MODE.CONSTANT,
               HP_GAIN_MODE.ENEMY_HP_FRACTION
             )

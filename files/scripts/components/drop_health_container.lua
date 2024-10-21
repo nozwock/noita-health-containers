@@ -12,12 +12,12 @@ function death(damage_type_bit_field, damage_message, entity_thats_responsible, 
   local max_hp = ComponentGetValue2(damage_model, "max_hp")
 
   local drop_chance = 0
-  local drop_chance_mode = utils:ModSettingGetNumber("drop_chance_mode")
+  local drop_chance_mode = utils:ModSettingGetNumber("drop_chance.mode")
   if drop_chance_mode == const.enum.DROP_CHANCE_MODE.CONSTANT then
-    drop_chance = utils:ModSettingGetNumber("drop_chance_constant")
+    drop_chance = utils:ModSettingGetNumber("drop_chance.constant_chance")
   elseif drop_chance_mode == const.enum.DROP_CHANCE_MODE.ENEMY_SCALE then
-    local base_chance = utils:ModSettingGetNumber("drop_chance_scale_base")
-    local base_hp = utils:ModSettingGetNumber("drop_chance_scale_base_hp")
+    local base_chance = utils:ModSettingGetNumber("drop_chance.enemy_base_chance")
+    local base_hp = utils:ModSettingGetNumber("drop_chance.enemy_base_hp")
     drop_chance = max_hp / base_hp * base_chance
   end
 
