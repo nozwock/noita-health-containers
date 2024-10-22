@@ -1,7 +1,7 @@
 <Entity name="health_container_entity" tags="item_physics">
 	<!-- name Hover name, material name is fallback -->
 	<UIInfoComponent
-		name="Health pickup">
+		name="$health_container_health_hover">
 	</UIInfoComponent>
 
 	<PhysicsBodyComponent
@@ -29,7 +29,7 @@
 	<ItemComponent
 		_tags="enabled_in_world"
 		auto_pickup="1"
-		item_name="Health"
+		item_name="$health_container_health_pickup"
 		max_child_items="0"
 		is_pickable="1"
 		ui_sprite="data/ui_gfx/items/book.png"

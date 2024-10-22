@@ -24,7 +24,7 @@
     _parent="gem_box2d"
     tags="[box2d],[solid]"
     name="health_pickup_box2d"
-    ui_name="health"
+    ui_name="$health_container_health_mat"
     wang_color="01ff038f"
     gfx_glow="0"
     audio_physics_material_wall=""
