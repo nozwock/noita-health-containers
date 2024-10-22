@@ -2,6 +2,7 @@ dofile_once("data/scripts/game_helpers.lua")
 dofile_once("data/scripts/lib/utilities.lua")
 local const = dofile_once("mods/health_container/files/scripts/const.lua") ---@type const
 local utils = dofile_once("mods/health_container/files/scripts/utils.lua") ---@type utils
+local font = dofile_once("mods/health_container/files/scripts/font.lua") ---@type font
 
 function item_pickup(entity_item, entity_who_picked, item_name)
   local damage_model = EntityGetFirstComponent(entity_who_picked, "DamageModelComponent")
@@ -52,8 +53,8 @@ function item_pickup(entity_item, entity_who_picked, item_name)
   end
 
   ComponentSetValue2(damage_model, "hp", player_hp + hp_gain)
-  -- todo: Since it doesn't seem like the vanilla pickup msg can be disabled, show a popup text entity instead?
-  -- GamePrint(string.format("Picked up Health (%.1f)", hp_gain * 25))
+  local x, y = EntityGetFirstHitboxCenter(entity_item)
+  font:popup(x, y, string.format("+ %.1f", hp_gain * 25), 0.5, 0.45, 1, 0.23)
 
   local x, y = EntityGetTransform(entity_item)
   GamePlaySound("mods/health_container/files/audio/health_container_audio.snd", "health_container/hc_heal", x, y)
