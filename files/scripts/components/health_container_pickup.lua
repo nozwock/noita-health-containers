@@ -22,9 +22,13 @@ function item_pickup(entity_item, entity_who_picked, item_name)
 
   local hp_gain_mode = utils:ModSettingGetNumber("hp_gain.mode")
 
+  local enemy_max_hp
   local vsc = utils:EntityGetFirstVSC(entity_item, "enemy_max_hp")
-  if not vsc then return end
-  local enemy_max_hp = ComponentGetValue2(vsc, "value_float")
+  if vsc then
+    enemy_max_hp = ComponentGetValue2(vsc, "value_float")
+  elseif hp_gain_mode == const.enum.HP_GAIN_MODE.ENEMY_HP_FRACTION then
+    hp_gain_mode = const.enum.HP_GAIN_MODE.CONSTANT -- fallback
+  end
 
   local hp_gain = 0
   if hp_gain_mode == const.enum.HP_GAIN_MODE.CONSTANT then
