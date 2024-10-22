@@ -52,7 +52,8 @@ function item_pickup(entity_item, entity_who_picked, item_name)
   end
 
   ComponentSetValue2(damage_model, "hp", player_hp + hp_gain)
-  GamePrint(string.format("Picked up Health (%.1f)", hp_gain * 25))
+  -- todo: Since it doesn't seem like the vanilla pickup msg can be disabled, show a popup text entity instead?
+  -- GamePrint(string.format("Picked up Health (%.1f)", hp_gain * 25))
 
   local x, y = EntityGetTransform(entity_item)
   GamePlaySound("mods/health_container/files/audio/health_container_audio.snd", "health_container/hc_heal", x, y)
