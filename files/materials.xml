@@ -1,0 +1,37 @@
+<Materials>
+  <!-- <CellData
+    tags="[box2d],[solid]"
+    name="health_pickup_box2d"
+    ui_name="health"
+    cell_type="solid"
+    gfx_glow_color="0xff75ff3c"
+    wang_color="01ff038f"
+    durability="14"
+    hp="30000"
+    platform_type="0"
+    solid_static_type="0"
+    stainable="0"
+    solid_friction="0.05"
+    gfx_glow="0"
+  >
+    <Graphics
+      normal_mapped="0"
+    />
+  </CellData>  -->
+  <!-- My blinking :sob: -->
+
+  <CellDataChild
+    _parent="gem_box2d"
+    tags="[box2d],[solid]"
+    name="health_pickup_box2d"
+    ui_name="health"
+    wang_color="01ff038f"
+    gfx_glow="0"
+    audio_physics_material_wall=""
+    audio_physics_material_solid=""
+  >
+    <Graphics
+      normal_mapped="0"
+    />
+  </CellDataChild>
+</Materials>

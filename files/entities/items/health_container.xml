@@ -1,8 +1,8 @@
 <Entity name="health_container_entity" tags="item_physics">
-	<!-- physical presence -->
-	<!-- <UIInfoComponent
-	name="$item_healthcontainer">
-	</UIInfoComponent> -->
+	<!-- name Hover name, material name is fallback -->
+	<UIInfoComponent
+		name="Health pickup">
+	</UIInfoComponent>
 
 	<PhysicsBodyComponent
 		_tags="enabled_in_world"
@@ -21,14 +21,15 @@
 		body_id="1"
 		centered="1"
 		image_file="mods/health_container/files/gfx/items/health_container.png"
-		material="ice_glass_b2"
+		material="health_pickup_box2d"
 	/>
 
 	<!-- item -->
+	<!-- item_name Pickup name -->
 	<ItemComponent
 		_tags="enabled_in_world"
 		auto_pickup="1"
-		item_name="Health container"
+		item_name="Health"
 		max_child_items="0"
 		is_pickable="1"
 		ui_sprite="data/ui_gfx/items/book.png"
