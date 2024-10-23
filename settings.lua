@@ -29,7 +29,7 @@ end
 ---@param number number
 ---@param decimal? integer
 local function TruncateNumber(number, decimal)
-  if decimal <= 0 then decimal = nil end
+  if decimal and decimal <= 0 then decimal = nil end
   local pow = 10 ^ (decimal or 0)
   return math.floor(number * pow) / pow
 end
@@ -42,7 +42,7 @@ end
 ---@param number number
 ---@param decimal? integer
 local function FloorSliderValueFloat(number, decimal)
-  if decimal <= 0 or not decimal then decimal = 0 end
+  if not decimal or decimal <= 0 then decimal = 0 end
   local pow = 10 ^ (decimal + 1)
   return TruncateNumber(number + 5 / pow, decimal)
 end
