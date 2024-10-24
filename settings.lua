@@ -142,7 +142,7 @@ local function ModSettingSlider(
     setting.value_default,
     setting.value_slider_multiplier or 1, -- This affects the steps for slider aswell, so it's not just a visual thing.
     " ",
-    64
+    setting.slider_width or 64
   )
   if value_map then value_new = value_map(value_new) end
 
@@ -177,7 +177,11 @@ local function mod_setting_integer(mod_id, gui, in_main_menu, im_id, setting)
     setting,
     setting.value_display_formatting or " %d",
     setting.value_display_multiplier,
-    function(value) return FloorSliderValueInteger(value) end
+    function(value)
+      value = FloorSliderValueInteger(value)
+      if setting.value_map then value = setting.value_map(value) end
+      return value
+    end
   )
 end
 
@@ -190,9 +194,21 @@ local function mod_setting_float(mod_id, gui, in_main_menu, im_id, setting)
     setting,
     setting.value_display_formatting or " %.1f",
     setting.value_display_multiplier,
-    function(value) return FloorSliderValueFloat(value, setting.value_precision) end
+    function(value)
+      value = FloorSliderValueFloat(value, setting.value_precision)
+      if setting.value_map then value = setting.value_map(value) end
+      return value
+    end
   )
 end
+
+---@param number number
+local function RoundToNearest(number)
+  local fraction = number - math.floor(number)
+  return math.floor(number) + math.floor(fraction * 2 + 0.5) / 2
+end
+
+local function NearestRoundedHP(value) return RoundToNearest(value * 25) / 25 end
 
 local DROP_CHANCE_MODE = { CONSTANT = 1, ENEMY_SCALE = 2 }
 local HP_GAIN_MODE = { CONSTANT = 1, PLAYER_HP_FRACTION = 2, ENEMY_HP_FRACTION = 3 }
@@ -266,6 +282,8 @@ mod_settings = {
         value_precision = 2,
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
+        value_map = NearestRoundedHP,
+        slider_width = 70, -- Increased slider width to allow more steps
         ui_fn = function(...)
           if ModSettingGetNextValue(ResolveModSettingId("drop_chance.mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
             mod_setting_float(...)
@@ -329,6 +347,8 @@ mod_settings = {
         value_precision = 2,
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
+        value_map = NearestRoundedHP,
+        slider_width = 70,
         ui_fn = function(...)
           if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.CONSTANT then
             mod_setting_float(...)
@@ -346,6 +366,8 @@ mod_settings = {
         value_precision = 2,
         value_display_multiplier = 25,
         value_display_formatting = " %.1f HP",
+        value_map = NearestRoundedHP,
+        slider_width = 70,
         ui_fn = function(...)
           if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
             mod_setting_float(...)
@@ -419,6 +441,8 @@ mod_settings = {
     value_precision = 2,
     value_display_multiplier = 25,
     value_display_formatting = " %.1f HP",
+    value_map = NearestRoundedHP,
+    slider_width = 70,
     ui_fn = mod_setting_float,
     scope = MOD_SETTING_SCOPE_RUNTIME,
   },
