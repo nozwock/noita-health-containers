@@ -197,7 +197,7 @@ end
 local DROP_CHANCE_MODE = { CONSTANT = 1, ENEMY_SCALE = 2 }
 local HP_GAIN_MODE = { CONSTANT = 1, PLAYER_HP_FRACTION = 2, ENEMY_HP_FRACTION = 3 }
 
-mod_settings_version = 1
+mod_settings_version = 2
 
 mod_settings = {
   {
@@ -418,6 +418,14 @@ mod_settings = {
 function ModSettingsUpdate(init_scope)
   local old_version = mod_settings_get_version(MOD_ID) -- This can be used to migrate some settings between mod versions.
   mod_settings_update(MOD_ID, mod_settings, init_scope)
+
+  if old_version <= 1 then
+    local id = ResolveModSettingId("hp_gain.mode")
+    if ModSettingGetNextValue(id) == HP_GAIN_MODE.PLAYER_HP_FRACTION then
+      ModSettingSetNextValue(id, HP_GAIN_MODE.CONSTANT, false)
+      ModSettingSet(id, HP_GAIN_MODE.CONSTANT)
+    end
+  end
 end
 
 -- This function should return the number of visible setting UI elements.
