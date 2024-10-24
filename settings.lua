@@ -324,7 +324,7 @@ mod_settings = {
       },
       {
         id = "hp_gain.enemy_base_hp",
-        ui_name = "Base Amount",
+        ui_name = "Flat Amount",
         ui_description = "The amount of additional HP to be healed, along\nwith a percentage of the enemy's max HP.",
         value_default = 0.4,
         value_min = 0.04,
