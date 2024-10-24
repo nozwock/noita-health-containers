@@ -273,6 +273,20 @@ mod_settings = {
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
+      {
+        id = "drop_chance.sqrt_passes",
+        ui_name = "SquareRoot Passes",
+        ui_description = "Apply the square root to the drop chance for enemies\nwith more health than 'Base Enemy HP'.",
+        value_default = 1,
+        value_min = 0,
+        value_max = 4,
+        ui_fn = function(...)
+          if ModSettingGetNextValue(ResolveModSettingId("drop_chance.mode")) == DROP_CHANCE_MODE.ENEMY_SCALE then
+            mod_setting_integer(...)
+          end
+        end,
+        scope = MOD_SETTING_SCOPE_RUNTIME,
+      },
     },
   },
   {
@@ -352,6 +366,20 @@ mod_settings = {
         ui_fn = function(...)
           if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
             mod_setting_float(...)
+          end
+        end,
+        scope = MOD_SETTING_SCOPE_RUNTIME,
+      },
+      {
+        id = "hp_gain.sqrt_passes",
+        ui_name = "SquareRoot Passes",
+        ui_description = "Apply the square root to the HP gain before\nscaling it with 'Player HP Scale'.",
+        value_default = 1,
+        value_min = 0,
+        value_max = 4,
+        ui_fn = function(...)
+          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.ENEMY_HP_FRACTION then
+            mod_setting_integer(...)
           end
         end,
         scope = MOD_SETTING_SCOPE_RUNTIME,

@@ -35,8 +35,10 @@ function item_pickup(entity_item, entity_who_picked, item_name)
     hp_gain = utils:ModSettingGetNumber("hp_gain.constant_hp")
     hp_gain = hp_gain + scale_hp_gain(hp_gain)
   elseif hp_gain_mode == const.enum.HP_GAIN_MODE.ENEMY_HP_FRACTION then
+    local sqrt_passes = utils:ModSettingGetNumber("hp_gain.sqrt_passes")
     hp_gain = utils:ModSettingGet("hp_gain.enemy_base_hp")
       + enemy_max_hp * utils:ModSettingGetNumber("hp_gain.enemy_hp_fraction")
+    hp_gain = utils:SqrtPass(hp_gain, sqrt_passes)
     hp_gain = hp_gain + scale_hp_gain(hp_gain)
   else
     error("unreachable")
