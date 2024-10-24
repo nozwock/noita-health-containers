@@ -286,23 +286,24 @@ mod_settings = {
         id = "hp_gain.mode",
         ui_name = "Mode",
         value_default = HP_GAIN_MODE.CONSTANT,
-        ui_fn = CreateGuiSettingEnum(
-          { HP_GAIN_MODE.CONSTANT, HP_GAIN_MODE.PLAYER_HP_FRACTION, HP_GAIN_MODE.ENEMY_HP_FRACTION },
-          {
-            [HP_GAIN_MODE.CONSTANT] = {
-              ui_name = "Constant",
-              ui_description = "Heals a fixed amount of HP with each pickup.",
-            },
-            [HP_GAIN_MODE.PLAYER_HP_FRACTION] = {
-              ui_name = "Player HP Based",
-              ui_description = "Heals a percentage of the player's max HP with each pickup.",
-            },
-            [HP_GAIN_MODE.ENEMY_HP_FRACTION] = {
-              ui_name = "Enemy HP Based",
-              ui_description = "Heals a percentage of the enemy's max HP with each pickup.",
-            },
-          }
-        ),
+        ui_fn = CreateGuiSettingEnum({
+          HP_GAIN_MODE.CONSTANT,
+          -- HP_GAIN_MODE.PLAYER_HP_FRACTION,
+          HP_GAIN_MODE.ENEMY_HP_FRACTION,
+        }, {
+          [HP_GAIN_MODE.CONSTANT] = {
+            ui_name = "Constant",
+            ui_description = "Heals a fixed amount of HP with each pickup.",
+          },
+          -- [HP_GAIN_MODE.PLAYER_HP_FRACTION] = {
+          --   ui_name = "Player HP Based",
+          --   ui_description = "Heals a percentage of the player's max HP with each pickup.",
+          -- },
+          [HP_GAIN_MODE.ENEMY_HP_FRACTION] = {
+            ui_name = "Enemy HP Based",
+            ui_description = "Heals a percentage of the enemy's max HP with each pickup.",
+          },
+        }),
         scope = MOD_SETTING_SCOPE_RUNTIME,
       },
       {
@@ -316,22 +317,6 @@ mod_settings = {
         value_display_formatting = " %.1f HP",
         ui_fn = function(...)
           if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.CONSTANT then
-            mod_setting_float(...)
-          end
-        end,
-        scope = MOD_SETTING_SCOPE_RUNTIME,
-      },
-      {
-        id = "hp_gain.player_hp_fraction",
-        ui_name = "HP Fraction",
-        value_default = 0.05,
-        value_min = 0.01,
-        value_max = 1,
-        value_precision = 2,
-        value_display_multiplier = 100,
-        value_display_formatting = " %d%%",
-        ui_fn = function(...)
-          if ModSettingGetNextValue(ResolveModSettingId("hp_gain.mode")) == HP_GAIN_MODE.PLAYER_HP_FRACTION then
             mod_setting_float(...)
           end
         end,
