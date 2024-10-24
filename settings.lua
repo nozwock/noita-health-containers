@@ -175,7 +175,7 @@ local function mod_setting_integer(mod_id, gui, in_main_menu, im_id, setting)
     in_main_menu,
     im_id,
     setting,
-    setting.value_display_formatting or "%d",
+    setting.value_display_formatting or " %d",
     setting.value_display_multiplier,
     function(value) return FloorSliderValueInteger(value) end
   )
@@ -188,7 +188,7 @@ local function mod_setting_float(mod_id, gui, in_main_menu, im_id, setting)
     in_main_menu,
     im_id,
     setting,
-    setting.value_display_formatting or "%.1f",
+    setting.value_display_formatting or " %.1f",
     setting.value_display_multiplier,
     function(value) return FloorSliderValueFloat(value, setting.value_precision) end
   )
