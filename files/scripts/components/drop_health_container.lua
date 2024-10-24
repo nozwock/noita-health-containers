@@ -21,7 +21,7 @@ function death(damage_type_bit_field, damage_message, entity_thats_responsible, 
     drop_chance = max_hp / base_hp * base_chance
   end
 
-  if GameGetIsTrailerModeEnabled() or math.random() > drop_chance then return end
+  if GameGetIsTrailerModeEnabled() or math.random() > math.min(1, drop_chance) then return end
 
   local x, y = EntityGetTransform(entity_id)
   local pickup_entity_id = EntityLoad("mods/health_container/files/entities/items/health_container.xml", x, y - 7)

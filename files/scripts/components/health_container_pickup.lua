@@ -56,7 +56,7 @@ function item_pickup(entity_item, entity_who_picked, item_name)
     ComponentSetValue2(damage_model, "max_hp", player_max_hp)
   end
 
-  ComponentSetValue2(damage_model, "hp", player_hp + hp_gain)
+  ComponentSetValue2(damage_model, "hp", math.min(player_max_hp, player_hp + hp_gain))
   local x, y = EntityGetFirstHitboxCenter(entity_item)
   font:popup(x, y, string.format("+ %.1f", hp_gain * 25), 0.5, 0.45, 1, 0.23)
 
