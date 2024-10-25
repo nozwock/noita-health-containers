@@ -324,8 +324,8 @@ mod_settings = {
           HP_GAIN_MODE.ENEMY_HP_FRACTION,
         }, {
           [HP_GAIN_MODE.CONSTANT] = {
-            ui_name = "Constant",
-            ui_description = "Heals a fixed amount of HP with each pickup.",
+            ui_name = "Normal",
+            ui_description = "Heals a flat amount of HP with each pickup,\nwith an option to scale it based on the player's max HP.",
           },
           -- [HP_GAIN_MODE.PLAYER_HP_FRACTION] = {
           --   ui_name = "Player HP Based",
@@ -340,7 +340,7 @@ mod_settings = {
       },
       {
         id = "hp_gain.constant_hp",
-        ui_name = "Amount",
+        ui_name = "Flat Amount",
         value_default = 0.2,
         value_min = 0.04,
         value_max = 4,
